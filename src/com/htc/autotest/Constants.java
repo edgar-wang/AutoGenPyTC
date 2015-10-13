@@ -16,4 +16,10 @@ public class Constants
 	public static final String ARG_OUTPUT_PATH 	= "o";
 	
 	public static final String CONFIG_FILE 		= "Settings.config";
+	
+	// excel title
+	public static final int XLS_TITLE 			= 1;
+	public static final int XLS_TYPE 			= 2;
+	public static final int XLS_PRIORITY 		= 3;
+	public static final int XLS_EXCEPTED_RESULT = 4;
 }

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,9 +15,10 @@ import com.htc.autotest.Constants;
 public class Logger {
 	
 	private static PrintStream ps;
-	private static boolean bLog2File = false;//TODO: remove when formal release
-	
-	static {
+	private static boolean bLog2File = true;//TODO: remove when formal release
+		
+	public static void init()
+	{
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String logFolderPath = System.getProperty("user.dir") + File.separator + "Log";
 		File logFolder = new File(logFolderPath);
@@ -27,8 +30,7 @@ public class Logger {
 			}
 		}
 
-		String filename = logFolderPath + File.separator
-				+ dateFormat.format(new Date()) + ".log";
+		String filename = logFolderPath + File.separator + dateFormat.format(new Date()) + ".log";
 		try {
 			ps = new PrintStream(new FileOutputStream(filename));
 		} catch (FileNotFoundException e) {
@@ -71,18 +73,26 @@ public class Logger {
 	
 	public static void e(Throwable e)
 	{
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		String stacktrace = sw.toString();
+		
 		if (bLog2File && ps != null)
-			toFile(getFuncName(Constants.ERROR) + e);
+			toFile(getFuncName(Constants.ERROR) + stacktrace);
 		else
-			System.out.println(getFuncName(Constants.ERROR) + e);
+			System.out.println(getFuncName(Constants.ERROR) + stacktrace);
 	}
 
 	public static void e(String description, Throwable e)
 	{
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		String stacktrace = sw.toString();
+		
 		if (bLog2File && ps != null)
-			toFile(getFuncName(Constants.ERROR) + description + ": " + e);
+			toFile(getFuncName(Constants.ERROR) + description + ": " + stacktrace);
 		else
-			System.out.println(getFuncName(Constants.ERROR) + description + ": " + e);
+			System.out.println(getFuncName(Constants.ERROR) + description + ": " + stacktrace);
 	}
 	
 	public static void iFunc()
