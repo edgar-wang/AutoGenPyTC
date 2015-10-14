@@ -25,6 +25,10 @@ public class TCGenerator {
 							String.format("test_%s_old.py", testplan.componentName.toLowerCase()));
 					FileUtils.copyFile(targetFile, oldFile);
 				}
+				
+				//create with header
+				File headFile = FileUtils.getFile(Config.getProperty("PY_TC_HEADER_FILE"));
+				FileUtils.copyFile(headFile, targetFile);
 				ArrayList<String> strTC = new ArrayList<String>();
 				for (TestCase testcase : testplan.testcaseList) {
 					strTC.add(Config.getProperty("PY_TC_SETUP"));
@@ -36,7 +40,7 @@ public class TCGenerator {
 					strTC.add(String.format(Config.getProperty("PY_TC_NAME"), testcase.name));
 					strTC.add("\tpass");
 					strTC.add("");
-					FileUtils.writeLines(targetFile, strTC);
+					FileUtils.writeLines(targetFile, strTC, true);
 				}
 			}
 		} catch (IOException e) {
