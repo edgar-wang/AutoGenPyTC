@@ -23,6 +23,12 @@ public class TCGenerator {
 				if (targetFile.exists()) {
 					File oldFile = FileUtils.getFile(outputPath,
 							String.format("test_%s_old.py", testplan.componentName.toLowerCase()));
+					int count = 1;
+					while(oldFile.exists()){
+						oldFile = FileUtils.getFile(outputPath,
+								String.format("test_%s_old(%02d).py", testplan.componentName.toLowerCase(), count));
+						count++;
+					}
 					FileUtils.copyFile(targetFile, oldFile);
 				}
 				ArrayList<String> strTC = new ArrayList<String>();
