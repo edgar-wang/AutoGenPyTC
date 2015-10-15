@@ -18,6 +18,11 @@ import sdet_rest
 import sdet_time
 import sdet_nose_util
 
+from sdet_nose_testconfig import config
+
+# get profile section from env
+profile = os.getenv('var_profile')
+
 def setup_func(func_name):
 	"set up test fixtures"
     
