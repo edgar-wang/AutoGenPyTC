@@ -37,6 +37,7 @@ public class TCGenerator {
 				FileUtils.copyFile(headFile, targetFile);
 				ArrayList<String> strTC = new ArrayList<String>();
 				for (TestCase testcase : testplan.testcaseList) {
+					strTC.clear();
 					strTC.add(Config.getProperty("PY_TC_SETUP"));
 					strTC.add(String.format(Config.getProperty("PY_TC_ATTR_PRIORITY"), testcase.priority));
 					strTC.add(String.format(Config.getProperty("PY_TC_ATTR_DESC"), testcase.description));
